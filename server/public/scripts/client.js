@@ -12,11 +12,6 @@ function handleReady() {
 let selectedOperator = null;
 let errorMessage = '';
 
-// equals triggers the packaging of data
-// data includes the two numbers and whichever operator is chosen
-
-// equals only works when operator is selected and there is a number in each field
-
 function operatorSelect(operator) {
     // remove class from all operator buttons
     $('.operator-btn').removeClass('selected-operator-btn')
@@ -38,6 +33,21 @@ function equalsButton() {
             operator: selectedOperator
         }
         console.log('dataToSend:', dataToSend);
+
+        $.ajax({
+            url: '/calc',
+            type: 'POST',
+            data: dataToSend
+          }).then(function(response) {
+            console.log(response);
+          });
+        
+          $.ajax({
+            url: '/calc',
+            type: 'GET',
+          }).then(function(response) {
+            console.log('response from server:', response);
+          });
     } else {
         $('#answer-display').text('ERROR - ' + errorMessage);
         errorMessage = '';

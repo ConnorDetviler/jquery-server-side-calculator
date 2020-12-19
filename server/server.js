@@ -10,10 +10,18 @@ app.use(express.static('server/public'));
 app.use(bodyParser.urlencoded({extended : true}));
 
 
+app.post('/calc', (req, res) => {
+    console.log('in post')
+    let userInput = req.body;
+    console.log(userInput)
+    res.sendStatus(201);
+  })
 
-
-
-
+  app.get('/calc', (req, res) => {
+    // res.send(newData);
+    console.log('you got to /calc')
+    res.sendStatus(201);
+  })
 
 
 
