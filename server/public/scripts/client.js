@@ -7,6 +7,14 @@ function handleReady() {
     $('#divide-btn').on('click', function() {operatorSelect('divide')});
     $('#equals-btn').on('click', equalsButton);
     $('#clear-btn').on('click', clearButton);
+
+    $.ajax({
+        url: '/calc',
+        type: 'GET',
+      }).then(function(response) {
+        console.log('response from server:', response);
+        displayHistory(response.historyArray);
+      });
 } // end handleReady
 
 let selectedOperator = null;
@@ -47,6 +55,8 @@ function equalsButton() {
             type: 'GET',
           }).then(function(response) {
             console.log('response from server:', response);
+            displayHistory(response.historyArray);
+            displayAnswer(response.equals);
           });
     } else {
         $('#answer-display').text('ERROR - ' + errorMessage);
@@ -59,6 +69,7 @@ function clearButton () {
     $('.operator-btn').removeClass('selected-operator-btn')
     $('#num-input-one').val(null);
     $('#num-input-two').val(null);
+    $('#answer-display').text('-');
 } // end clearButton
 
 function checkError(inputOne, inputTwo) {
@@ -75,3 +86,14 @@ function checkError(inputOne, inputTwo) {
         return false; // returns false if there is no error
     }
 } // end checkError
+
+function displayHistory(historyArray) {
+    $('#history-list').empty();
+    for (let i = 0; i < historyArray.length; i++) {
+        $('#history-list').append(`<li>${historyArray[i]}</li>`)
+    }
+} // end displayHistory
+
+function displayAnswer(equals) {
+    $('#answer-display').text(equals);
+} // end displayAnswer

@@ -20,13 +20,16 @@ app.post('/calc', (req, res) => {
 });
 
 app.get('/calc', (req, res) => {
-    // res.send(newData);
+    res.send(results);
     console.log('you got to /calc')
-    res.sendStatus(201);
+    // res.sendStatus(201);
 });
 
+let historyArray = [];
+let results = {};
+
 function doMath(userInput) {
-    let results = {};
+    let historyLog = '';
     let num1 = Number(userInput.inputOne);
     let num2 = Number(userInput.inputTwo);
     let operator = userInput.operator;
@@ -34,24 +37,28 @@ function doMath(userInput) {
     switch (operator) {
         case 'add':
             results.equals = num1 + num2;
-            results.log = `${num1} + ${num2} = ${results.equals}`;
+            historyLog = `${num1} + ${num2} = ${results.equals}`;
             break;
 
         case 'subtract':
             results.equals = num1 - num2;
-            results.log = `${num1} - ${num2} = ${results.equals}`;
+            historyLog = `${num1} - ${num2} = ${results.equals}`;
             break;
 
         case 'multiply':
             results.equals = num1 * num2;
-            results.log = `${num1} &#215 ${num2} = ${results.equals}`
+            historyLog = `${num1} &#215 ${num2} = ${results.equals}`
             break;
 
         case 'divide':
             results.equals = num1 / num2;
-            results.log = `${num1} ÷ ${num2} = ${results.equals}`
+            historyLog = `${num1} ÷ ${num2} = ${results.equals}`
             break;
     }
+
+    historyArray.unshift(historyLog);
+    results.historyArray = historyArray;
+
     console.log(results);
 }
 
