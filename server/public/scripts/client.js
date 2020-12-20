@@ -25,11 +25,11 @@ function equalsButton() {
     let inputTwo = $('#num-input-two');
     let dataToSend = {};
 
-    // checkError function makes sure all data is present before attempting to send it to the server
+    // uses checkError function to make sure all data is present before attempting to send it to the server
     if (checkError(inputOne, inputTwo) === false) {
         dataToSend = {
-            inputOne: Number(inputOne.val()),
-            inputTwo: Number(inputTwo.val()),
+            inputOne: inputOne.val(),
+            inputTwo: inputTwo.val(),
             operator: selectedOperator
         }
         console.log('dataToSend:', dataToSend);
@@ -41,7 +41,7 @@ function equalsButton() {
           }).then(function(response) {
             console.log(response);
           });
-        
+
           $.ajax({
             url: '/calc',
             type: 'GET',
